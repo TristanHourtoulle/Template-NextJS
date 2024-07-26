@@ -1,3 +1,13 @@
+// Vercel Insights
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+
+// Wrapper & Theme Provider
+import SuspenseWrapper from "@/components/SuspenseWrapper";
+import { ThemeProvider } from "next-themes";
+
+import { Footer } from "@/components/Layout/Footer";
+import { Header } from "@/components/Layout/Header";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -16,7 +26,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <head></head>
+      <body className={inter.className}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <SuspenseWrapper>
+            <Header />
+            {children}
+            <Analytics />
+            <SpeedInsights />
+            <Footer />
+          </SuspenseWrapper>
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
